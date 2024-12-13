@@ -1,0 +1,159 @@
+<html><head><base href="/" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(180deg, #0a2436 0%, #1c4966 100%);
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+      }
+    
+      .container {
+        text-align: center;
+        color: white;
+      }
+    
+      .octopus {
+        width: 300px;
+        height: 300px;
+        margin: 20px auto;
+        position: relative;
+      }
+    
+      .tentacle {
+        stroke: #ff69b4;
+        stroke-width: 8;
+        fill: none;
+        animation: wiggle 3s ease-in-out infinite;
+      }
+    
+      @keyframes wiggle {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px) rotate(-5deg); }
+        75% { transform: translateX(10px) rotate(5deg); }
+      }
+    
+      .eye {
+        fill: white;
+        animation: blink 4s infinite;
+      }
+    
+      @keyframes blink {
+        0%, 95%, 100% { transform: scaleY(1); }
+        97% { transform: scaleY(0.1); }
+      }
+    
+      .body {
+        fill: #ff69b4;
+      }
+    
+      .todo-list {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        width: 300px;
+        margin: 20px auto;
+      }
+    
+      .todo-item {
+        background: rgba(255, 255, 255, 0.2);
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+    
+      .todo-item:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+      }
+    
+      .completed {
+        text-decoration: line-through;
+        opacity: 0.7;
+      }
+    
+      button {
+        background: #ff69b4;
+        border: none;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+    
+      button:hover {
+        transform: scale(1.1);
+      }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+      <svg class="octopus" viewBox="0 0 400 400">
+        <!-- Body -->
+        <circle class="body" cx="200" cy="150" r="80"/>
+        
+        <!-- Eyes -->
+        <circle class="eye" cx="170" cy="130" r="15"/>
+        <circle class="eye" cx="230" cy="130" r="15"/>
+        <circle fill="black" cx="170" cy="130" r="7"/>
+        <circle fill="black" cx="230" cy="130" r="7"/>
+        
+        <!-- Tentacles -->
+        <path class="tentacle" d="M140,200 Q120,250 130,300" style="animation-delay: -0.5s"/>
+        <path class="tentacle" d="M160,200 Q140,260 150,300" style="animation-delay: -1s"/>
+        <path class="tentacle" d="M180,200 Q160,270 170,300" style="animation-delay: -1.5s"/>
+        <path class="tentacle" d="M200,200 Q180,260 190,300" style="animation-delay: -2s"/>
+        <path class="tentacle" d="M220,200 Q200,270 210,300" style="animation-delay: -2.5s"/>
+        <path class="tentacle" d="M240,200 Q220,260 230,300" style="animation-delay: -3s"/>
+        <path class="tentacle" d="M260,200 Q240,250 250,300" style="animation-delay: -3.5s"/>
+      </svg>
+    
+      <div class="todo-list">
+        <h2>Отчеты</h2>
+        <div id="tasks"></div>
+        <button onclick="addTask()">Создать новый отчет</button>
+      </div>
+    </div>
+    
+    <script>
+    const tasks = [
+      "Посмотреть существующие отчеты",
+      "Посмотреть архивированные отчеты"
+    ];
+    
+    let currentTasks = [];
+    
+    function addTask() {
+      if (tasks.length === 0) return;
+      const randomIndex = Math.floor(Math.random() * tasks.length);
+      const task = tasks.splice(randomIndex, 1)[0];
+      currentTasks.push({ text: task, completed: false });
+      renderTasks();
+    }
+    
+    function toggleTask(index) {
+      currentTasks[index].completed = !currentTasks[index].completed;
+      renderTasks();
+    }
+    
+    function renderTasks() {
+      const tasksDiv = document.getElementById('tasks');
+      tasksDiv.innerHTML = currentTasks.map((task, index) => `
+        <div class="todo-item ${task.completed ? 'completed' : ''}" 
+             onclick="toggleTask(${index})">
+          ${task.text}
+        </div>
+      `).join('');
+    }
+    
+    // Add initial tasks
+    addTask();
+    addTask();
+    </script>
+    </body></html>

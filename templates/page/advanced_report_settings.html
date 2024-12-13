@@ -1,0 +1,393 @@
+<html><head><base href="/" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff;
+        }
+        
+        .tab-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid #4a90e2;
+            color: #4a90e2;
+            margin-bottom: -2px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .octopus {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .tentacle {
+            animation: wiggle 3s ease-in-out infinite;
+            transform-origin: 50% 0;
+        }
+
+        @keyframes wiggle {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .project-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            padding: 8px 16px;
+            background-color: white;
+            color: #4a90e2;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="project-name">SPRUT</div>
+        <button class="back-button" onclick="window.history.back()">Назад</button>
+    </div>
+    <div class="tab-container">
+        <div class="tabs">
+            <button class="tab active" onclick="openTab('tab0')">Описание отчета</button>
+            <button class="tab" onclick="openTab('tab1')">Код сборки</button>
+            <button class="tab" onclick="openTab('tab2')">Профили и фильтры</button>
+            <button class="tab" onclick="openTab('tab3')">Параметры колонок</button>
+            <button class="tab" onclick="openTab('tab4')">Дополнительные настройки отчета</button>
+        </div>
+
+        <div id="tab0" class="tab-content active">
+            <div class="input-group">
+                <label>Report Caption</label>
+                <input type="text" name="report_caption">
+            </div>
+            <div class="input-group">
+                <label>Report Comment</label>
+                <input type="text" name="report_comment">
+            </div>
+            <div class="input-group">
+                <label>Report Proc Name</label>
+                <input type="text" name="report_proc_name">
+            </div>
+            <div class="input-group">
+                <label>Report Status</label>
+                <input type="text" name="report_status">
+            </div>
+            <div class="input-group">
+                <label>Report Group Name</label>
+                <input type="text" name="report_group_name">
+            </div>
+            <div class="input-group">
+                <label>Report Flg Online</label>
+                <input type="text" name="report_flg_online">
+            </div>
+            <div class="input-group">
+                <label>Report Flg Security</label>
+                <input type="text" name="report_flg_security">
+            </div>
+            <div class="input-group">
+                <label>Report Flg Useparam</label>
+                <input type="text" name="report_flg_useparam">
+            </div>
+            <div class="input-group">
+                <label>Report URL Details</label>
+                <input type="text" name="report_url_details">
+            </div>
+            <div class="input-group">
+                <label>Report Use Datefilter</label>
+                <input type="text" name="report_use_datefilter">
+            </div>
+            <div class="input-group">
+                <label>Report User Filter</label>
+                <input type="text" name="report_user_filter">
+            </div>
+            <div class="input-group">
+                <label>Report Source Flg</label>
+                <input type="text" name="report_source_flg">
+            </div>
+            <div class="input-group">
+                <label>Report Visible Info</label>
+                <input type="text" name="report_visible_info">
+            </div>
+            <div class="input-group">
+                <label>Report Visible Search</label>
+                <input type="text" name="report_visible_search">
+            </div>
+            <div class="input-group">
+                <label>Report Collapse Column</label>
+                <input type="text" name="report_collapse_column">
+            </div>
+            <div class="input-group">
+                <label>Report Collapse Length</label>
+                <input type="text" name="report_collapse_length">
+            </div>
+            <div class="input-group">
+                <label>Report Collapse Flag</label>
+                <input type="text" name="report_collapse_flag">
+            </div>
+            <div class="input-group">
+                <label>Report Version</label>
+                <input type="text" name="report_version">
+            </div>
+        </div>
+
+        <div id="tab1" class="tab-content">
+            <div class="input-group">
+                <label>Report Caption</label>
+                <input type="text" name="report_caption">
+            </div>
+            <div class="input-group">
+                <label>Report Comment</label>
+                <input type="text" name="report_comment">
+            </div>
+            <div class="input-group">
+                <label>Report Table DT</label>
+                <input type="text" name="report_table_dt">
+            </div>
+            <div class="input-group">
+                <label>ID</label>
+                <input type="text" name="id">
+            </div>
+            <div class="input-group">
+                <label>Время вставки</label>
+                <input type="text" name="insert_time">
+            </div>
+            <div class="input-group">
+                <label>ID шага</label>
+                <input type="text" name="step_id">
+            </div>
+            <div class="input-group">
+                <label>Алиас страницы</label>
+                <input type="text" name="page_alias">
+            </div>
+            <div class="input-group">
+                <label>Схема таблицы</label>
+                <input type="text" name="table_schema">
+            </div>
+            <div class="input-group">
+                <label>Имя таблицы</label>
+                <input type="text" name="table_name">
+            </div>
+            <div class="input-group">
+                <label>Уровень</label>
+                <input type="text" name="level">
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <div class="input-group">
+                <label>Report Table Order Col</label>
+                <input type="text" name="report_table_order_col">
+            </div>
+            <div class="input-group">
+                <label>Report Proc Name</label>
+                <input type="text" name="report_proc_name">
+            </div>
+            <div class="input-group">
+                <label>Report Status</label>
+                <input type="text" name="report_status">
+            </div>
+            <div class="input-group">
+                <label>Зарегистрированный пользователь</label>
+                <input type="text" name="registered_user">
+            </div>
+            <div class="input-group">
+                <label>Пользовательский фильтр</label>
+                <input type="text" name="user_filter">
+            </div>
+            <div class="input-group">
+                <label>Фильтр колонок</label>
+                <input type="text" name="column_filter">
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <div class="input-group">
+                <label>Report Group Name</label>
+                <input type="text" name="report_group_name">
+            </div>
+            <div class="input-group">
+                <label>Table Order Col</label>
+                <input type="text" name="table_order_col">
+            </div>
+            <div class="input-group">
+                <label>Table Report DT</label>
+                <input type="text" name="table_report_dt">
+            </div>
+        </div>
+
+        <div id="tab4" class="tab-content">
+            <div class="input-group">
+                <label>Алиас</label>
+                <input type="text" name="alias">
+            </div>
+            <div class="input-group">
+                <label>Схема таблицы</label>
+                <input type="text" name="table_schema_add">
+            </div>
+            <div class="input-group">
+                <label>Имя таблицы</label>
+                <input type="text" name="table_name_add">
+            </div>
+            <div class="input-group">
+                <label>Колонка таблицы</label>
+                <input type="text" name="table_column">
+            </div>
+            <div class="input-group">
+                <label>Время создания</label>
+                <input type="text" name="creation_time">
+            </div>
+            <div class="input-group">
+                <label>Пользователь</label>
+                <input type="text" name="user">
+            </div>
+            <div class="input-group">
+                <label>Фильтр колонок</label>
+                <input type="text" name="column_filter_add">
+            </div>
+            <div class="input-group">
+                <label>Хинт фильтра</label>
+                <input type="text" name="filter_hint">
+            </div>
+            <div class="input-group">
+                <label>Флаг экспорта</label>
+                <input type="text" name="export_flag">
+            </div>
+            <div class="input-group">
+                <label>Экспорт колонок таблицы</label>
+                <input type="text" name="table_columns_export">
+            </div>
+            <div class="input-group">
+                <label>Table Report DT2</label>
+                <input type="text" name="table_report_dt2">
+            </div>
+            <div class="input-group">
+                <label>Версия отчета</label>
+                <input type="text" name="report_version">
+            </div>
+            <div class="input-group">
+                <label>Тип объекта</label>
+                <input type="text" name="object_type">
+            </div>
+            <div class="input-group">
+                <label>Флаг загрузки</label>
+                <input type="text" name="load_flag">
+            </div>
+            <div class="input-group">
+                <label>ID</label>
+                <input type="text" name="id_additional">
+            </div>
+        </div>
+    </div>
+
+    <svg class="octopus" viewBox="0 0 200 200">
+        <!-- Body -->
+        <ellipse cx="100" cy="80" rx="40" ry="50" fill="#FF6B6B"/>
+        <!-- Eyes -->
+        <circle cx="85" cy="70" r="8" fill="white"/>
+        <circle cx="115" cy="70" r="8" fill="white"/>
+        <circle cx="85" cy="70" r="4" fill="black"/>
+        <circle cx="115" cy="70" r="4" fill="black"/>
+        <!-- Tentacles -->
+        <path class="tentacle" d="M 70 110 Q 60 140, 40 160" stroke="#FF6B6B" stroke-width="8" fill="none"/>
+        <path class="tentacle" d="M 85 110 Q 80 150, 70 170" stroke="#FF6B6B" stroke-width="8" fill="none"/>
+        <path class="tentacle" d="M 100 110 Q 100 140, 100 180" stroke="#FF6B6B" stroke-width="8" fill="none"/>
+        <path class="tentacle" d="M 115 110 Q 120 150, 130 170" stroke="#FF6B6B" stroke-width="8" fill="none"/>
+        <path class="tentacle" d="M 130 110 Q 140 140, 160 160" stroke="#FF6B6B" stroke-width="8" fill="none"/>
+      </svg>
+
+    <script>
+        function openTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let content of tabContents) {
+                content.classList.remove('active');
+            }
+            
+            // Remove active class from all tabs
+            const tabs = document.getElementsByClassName('tab');
+            for (let tab of tabs) {
+                tab.classList.remove('active');
+            }
+            
+            // Show the selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to the clicked tab
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body></html>
