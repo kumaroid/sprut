@@ -9,7 +9,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 
 from sprut import settings
+import logging
 
+logger = logging.getLogger(__name__)
+logger.setLevel(level='INFO')
 #декоратор для логов
 def timeit(func):
     @wraps(func)
@@ -18,11 +21,11 @@ def timeit(func):
         res = func(*args, **kwargs)
         end_time = time.perf_counter()
         total_time = end_time - start_time
-        print(f'Function {func.__name__}. Took {total_time:.4f} seconds')
+        logger.info(f'Function {func.__name__}. Took {total_time:.4f} seconds')
         return res
     return wrapper
 
-
+@timeit
 def get_schema_name_current_interface(interface_name: str):
     return "sprut_prom"
 
@@ -71,19 +74,19 @@ def execute_sql(connect, sql_query, params=None) :
 def get_connector_database():
     connect_str = f"dbname={settings.PG_DBNAME} user={settings.PG_USER} password={settings.PG_PASS} host={settings.PG_HOST} port={settings.PG_PORT}"
     try:
-        print(connect_str)
         return psycopg2.connect(connect_str)
     except Exception as e:
         print(f"Ошибка подключения: {e}")
 
 
-def check_priv(connect, request, role_name, user_name, interface_name):
+def get_current_user(request):
+    return request.user.username
+
+def check_priv(connect, request, role_name, user_name):
     try:
         check_role = execute_sql(
             connect.cursor(),
-            interface_name,
-            'check_priv_function',
-            f'''select ''' + '''sprut_prom.check_proc_priv(%s, %s)''',
+            '''select sprut_prom.check_priv_report(%s, %s)''',
             [role_name, user_name]
         )
         res = check_role.fetchall()

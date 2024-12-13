@@ -1,36 +1,35 @@
 {%block content%}
     <style>
-    .header {
-      background-color: #2C3E50;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    
-    .project-name {
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-      font-family: Arial, sans-serif;
-      margin: 0;
-    }
-    
-    .back-btn {
-      background-color: #34495E;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      font-family: Arial, sans-serif;
-    }
-    
-    .back-btn:hover {
-      background-color: #2C3E50;
-    }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .project-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            padding: 8px 16px;
+            background-color: white;
+            color: #4a90e2;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0;
+        }
     
     .octopus {
       position: fixed;
@@ -106,14 +105,18 @@
       border-color: #4CAF50;
       box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
     }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f0f8ff;
+    }
     </style>
     
     <body>
-    
-    <div class="header">
-      <h1 class="project-name">SPRUT</h1>
-      <a class="back-btn" href="javascript:window.history.back()">Назад</a>
-    </div>
+        <div class="header">
+            <div class="project-name">SPRUT</div>
+            <button class="back-button" onclick="window.history.back()">Назад</button>
+        </div>
     
     <div class="search-container">
       <input type="text" class="search-input" placeholder="Поиск по таблице..." id="searchInput">
@@ -123,9 +126,9 @@
       <thead>
         <tr>
           <th>Id</th>
-          <th>Группа</th>
           <th>Заголовок</th>
           <th>Алиас</th>
+          <th>Статус</th>
           <th>Дата изменения</th>
           <th>Действия</th>
         </tr>
@@ -138,7 +141,7 @@
           <td>{{ req.2 }}</td>
           <td>{{ req.3 }}</td>
           <td>{{ req.4 }}</td>
-          <td><a class="settings-btn" href="/{{ interface_name }}/report_settings/advanced_report_settings/{{id}}">Настроить</a></td>
+          <td><a class="settings-btn" href="/{{ interface_name }}/report_data/advanced_report_settings/{{ req.0 }}/">Настроить</a></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -165,7 +168,6 @@
         button.addEventListener('click', function() {
             const row = this.closest('tr');
             const id = row.cells[0].textContent;
-            alert(`Настройка записи с ID: ${id}`);
         });
     });
     

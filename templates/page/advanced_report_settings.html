@@ -1,4 +1,4 @@
-<html><head><base href="/" />
+{%block content%}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -113,12 +113,28 @@
         .back-button:hover {
             background-color: #f0f0f0;
         }
+        .save-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: all 0.3s;
+          }
+          
+          .save-btn:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+          }
     </style>
-</head>
+
 <body>
+
     <div class="header">
         <div class="project-name">SPRUT</div>
-        <button class="back-button" onclick="window.history.back()">Назад</button>
+        <a class="back-button" onclick="window.history.back()">Назад</a>
     </div>
     <div class="tab-container">
         <div class="tabs">
@@ -128,82 +144,85 @@
             <button class="tab" onclick="openTab('tab3')">Параметры колонок</button>
             <button class="tab" onclick="openTab('tab4')">Дополнительные настройки отчета</button>
         </div>
-
+        <form method="POST">
+            {% for nn in changeable_params %}
+            {% csrf_token %}
         <div id="tab0" class="tab-content active">
             <div class="input-group">
                 <label>Report Caption</label>
-                <input type="text" name="report_caption">
+                <input type="text"  id="report_caption" name="report_caption" value="{{nn.0}}">
             </div>
             <div class="input-group">
                 <label>Report Comment</label>
-                <input type="text" name="report_comment">
+                <input type="text" id="report_comment" name="report_comment" value="{{nn.1}}">
             </div>
             <div class="input-group">
                 <label>Report Proc Name</label>
-                <input type="text" name="report_proc_name">
+                <input type="text"  id="report_proc_name" name="report_proc_name" value="{{nn.2}}">
             </div>
             <div class="input-group">
                 <label>Report Status</label>
-                <input type="text" name="report_status">
+                <input type="text"  id="report_status" name="report_status" value="{{nn.3}}">
             </div>
             <div class="input-group">
                 <label>Report Group Name</label>
-                <input type="text" name="report_group_name">
+                <input type="text" id="report_group_name" name="report_group_name" value="{{nn.4}}">
             </div>
             <div class="input-group">
                 <label>Report Flg Online</label>
-                <input type="text" name="report_flg_online">
+                <input type="text" id="report_flg_online" name="report_flg_online" value="{{nn.5}}">
             </div>
             <div class="input-group">
                 <label>Report Flg Security</label>
-                <input type="text" name="report_flg_security">
+                <input type="text"  id="report_flg_security" name="report_flg_security" value="{{nn.6}}">
             </div>
             <div class="input-group">
                 <label>Report Flg Useparam</label>
-                <input type="text" name="report_flg_useparam">
+                <input type="text" id="report_flg_useparam" name="report_flg_useparam" value="{{nn.7}}">
             </div>
             <div class="input-group">
                 <label>Report URL Details</label>
-                <input type="text" name="report_url_details">
+                <input type="text" id="report_url_details" name="report_url_details" value="{{nn.8}}">
             </div>
             <div class="input-group">
                 <label>Report Use Datefilter</label>
-                <input type="text" name="report_use_datefilter">
+                <input type="text" id="report_use_datefilter" name="report_use_datefilter" value="{{nn.9}}">
             </div>
             <div class="input-group">
                 <label>Report User Filter</label>
-                <input type="text" name="report_user_filter">
+                <input type="text"  id="report_user_filter" name="report_user_filter" value="{{nn.10}}">
             </div>
             <div class="input-group">
                 <label>Report Source Flg</label>
-                <input type="text" name="report_source_flg">
+                <input type="text" id="report_source_flg" name="report_source_flg" value="{{nn.11}}">
             </div>
             <div class="input-group">
                 <label>Report Visible Info</label>
-                <input type="text" name="report_visible_info">
+                <input type="text" id="report_visible_info" name="report_visible_info" value="{{nn.12}}">
             </div>
             <div class="input-group">
                 <label>Report Visible Search</label>
-                <input type="text" name="report_visible_search">
+                <input type="text" id="report_visible_search" name="report_visible_search" value="{{nn.13}}">
             </div>
             <div class="input-group">
                 <label>Report Collapse Column</label>
-                <input type="text" name="report_collapse_column">
+                <input type="text" id="report_collapse_column" name="report_collapse_column" value="{{nn.14}}">
             </div>
             <div class="input-group">
                 <label>Report Collapse Length</label>
-                <input type="text" name="report_collapse_length">
+                <input type="text" id="report_collapse_length" name="report_collapse_length" value="{{nn.15}}">
             </div>
             <div class="input-group">
                 <label>Report Collapse Flag</label>
-                <input type="text" name="report_collapse_flag">
+                <input type="text" id="report_collapse_flag" name="report_collapse_flag" value="{{nn.16}}">
             </div>
             <div class="input-group">
                 <label>Report Version</label>
-                <input type="text" name="report_version">
+                <input type="text" id="report_version" name="report_version" value="{{nn.17}}">
             </div>
         </div>
-
+        {% endfor %}
+        {%endif%}
         <div id="tab1" class="tab-content">
             <div class="input-group">
                 <label>Report Caption</label>
@@ -352,7 +371,9 @@
             </div>
         </div>
     </div>
-
+    <input type="submit" class="save-btn" id="bt_save" name="bt_save" value="Сохранить"/>
+    <a hidden  href="{% url 'report_settings' interface_name %}"></a>
+</form>
     <svg class="octopus" viewBox="0 0 200 200">
         <!-- Body -->
         <ellipse cx="100" cy="80" rx="40" ry="50" fill="#FF6B6B"/>
@@ -390,4 +411,4 @@
             event.currentTarget.classList.add('active');
         }
     </script>
-</body></html>
+{% endblock %}

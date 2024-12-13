@@ -1,0 +1,200 @@
+{%block content%}
+    <style>
+    .octopus {
+      transform-origin: center;
+      animation: float 3s ease-in-out infinite;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+    }
+    
+    .tentacle {
+      animation: wiggle 4s ease-in-out infinite;
+      transform-origin: 50% 0;
+    }
+    
+    .speech-bubble {
+      position: fixed;
+      top: 200px;
+      left: 20px;  /* Changed from 50px to 20px to move speech bubble left */
+      background: white;
+      padding: 10px 15px;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      max-width: 200px;
+      font-size: 14px;
+    }
+    
+    .speech-bubble:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -10px;
+      width: 0;
+      height: 0;
+      border: 10px solid transparent;
+      border-bottom-color: white;
+      border-top: 0;
+      margin-left: -10px;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+    
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 15px;
+      margin-left: 240px;
+    }
+    
+    .input-group {
+      margin: 10px 0;
+    }
+    
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .save-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ff6b6b;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      transition: all 0.3s;
+    }
+    
+    .save-btn:hover {
+      background: #ff5252;
+      transform: scale(1.05);
+    }
+    
+    body {
+      background: #e0f7ff;
+      font-family: Arial, sans-serif;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #4a90e2;
+        color: white;
+        border-radius: 8px;
+    }
+
+    .project-name {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .back-button {
+        padding: 8px 16px;
+        background-color: white;
+        color: #4a90e2;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .back-button:hover {
+        background-color: #f0f0f0;
+    }
+    </style>
+    <body>
+        <form method="POST">
+            {% csrf_token %}
+        <div class="header">
+            <div class="project-name">SPRUT</div>
+            <button class="back-button" onclick="window.history.back()">Назад</button>
+        </div>
+    <svg class="octopus" width="200" height="200" viewBox="0 0 200 200">
+      <circle cx="100" cy="70" r="40" fill="#ff6b6b"/>
+      <circle cx="85" cy="70" r="8" fill="white"/>
+      <circle cx="115" cy="70" r="8" fill="white"/>
+      <circle cx="85" cy="70" r="4" fill="black"/>
+      <circle cx="115" cy="70" r="4" fill="black"/>
+      <!-- Tentacles -->
+      <path class="tentacle" d="M 70 100 Q 60 150 40 180" stroke="#ff6b6b" stroke-width="10" fill="none"/>
+      <path class="tentacle" d="M 85 100 Q 85 160 70 190" stroke="#ff6b6b" stroke-width="10" fill="none"/>
+      <path class="tentacle" d="M 100 100 Q 100 170 100 200" stroke="#ff6b6b" stroke-width="10" fill="none"/>
+      <path class="tentacle" d="M 115 100 Q 115 160 130 190" stroke="#ff6b6b" stroke-width="10" fill="none"/>
+      <path class="tentacle" d="M 130 100 Q 140 150 160 180" stroke="#ff6b6b" stroke-width="10" fill="none"/>
+    </svg>
+    
+    <div class="speech-bubble">
+      Вы создали отчет, настройте его параметры!
+    </div>
+    
+
+    <div class="form-container">
+      <div class="input-group">
+        <input type="text" id="report_caption" name="report_caption" placeholder="Caption">
+        <input type="text" id="report_comment" name="report_comment" placeholder="Comment">
+        <input type="text" id="report_table_dt" name="report_table_dt" placeholder="Table Report DT">
+        <input type="text" id="report_table_order_col" name="report_table_order_col" placeholder="Table Order Col">
+        <input type="text" id="report_proc_name" name="report_proc_name" placeholder="Proc Name">
+        <input type="text" id="report_status" name="report_status" placeholder="Status">
+        <input type="text" id="report_register_dttm" name="report_register_dttm" placeholder="Register DTTM">
+        <input type="text" id="report_group_name" name="report_group_name" placeholder="Group Name">
+        <input type="text" id="report_flg_online" name="report_flg_online" placeholder="Flag Online">
+        <input type="text" id="report_flg_security" name="report_flg_security" placeholder="Flag Security">
+        <input type="text" id="report_flg_useparam" name="report_flg_useparam" placeholder="Flag Use Param">
+        <input type="text" id="report_url_details" name="report_url_details" placeholder="URL Details">
+        <input type="text" id="report_use_datefilter" name="report_use_datefilter" placeholder="Use Date Filter">
+        <input type="text" id="report_user_filter" name="report_user_filter" placeholder="User Filter">
+        <input type="text" id="report_source_flg" name="report_source_flg" placeholder="Source Flag">
+        <input type="text" id="report_visible_info" name="report_visible_info" placeholder="Visible Info">
+        <input type="text" id="report_visible_search" name="report_visible_search" placeholder="Visible Search">
+        <input type="text" id="report_collapse_column" name="report_collapse_column" placeholder="Collapse Column">
+        <input type="text" id="report_collapse_length" name="report_collapse_length" placeholder="Collapse Length">
+        <input type="text" id="report_collapse_flag" name="report_collapse_flag" placeholder="Collapse Flag">
+        <input type="text" id="report_alias" name="report_alias" placeholder="Alias">
+        <input type="text" id="report_table_schema" name="report_table_schema" placeholder="Table Schema">
+        <input type="text" id="report_table_name" name="report_table_name" placeholder="Table Name">
+        <input type="text" id="report_table_column" name="report_table_column" placeholder="Table Column">
+        <input type="text" id="report_register_user" name="report_register_user" placeholder="Register User">
+        <input type="text" id="report_filter_column" name="report_filter_column" placeholder="Filter Column">
+        <input type="text" id="report_filter_hint" name="report_filter_hint" placeholder="Filter Hint">
+        <input type="text" id="report_flg_export" name="report_flg_export" placeholder="Flag Export">
+        <input type="text" id="report_table_column_export" name="report_table_column_export" placeholder="Table Column Export">
+        <input type="text" id="report_table_dt2" name="report_table_dt2" placeholder="Table Report DT2">
+        <input type="text" id="report_version" name="report_version" placeholder="Report Version">
+        <input type="text" id="report_objtype" name="report_objtype" placeholder="Object Type">
+        <input type="text" id="report_download_flg" name="report_download_flg" placeholder="Download Flag">
+      </div>
+    
+      <input type="submit" class="save-btn" id="bt_save_new_report" name="bt_save_new_report" value="Сохранить"/>
+      <a hidden  href="{% url 'report_settings' interface_name %}"></a>
+    </div>
+</form>
+    
+    <script>
+    document.querySelectorAll('.tentacle').forEach((tentacle, index) => {
+      tentacle.style.animationDelay = `${index * 0.2}s`;
+    });
+    </script>
+    
+    </body>
+
+{% endblock %}

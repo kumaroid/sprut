@@ -33,9 +33,12 @@ urlpatterns = [
         r"^(?P<interface_name>\w+)/workpage/$", views_dashboard.workpage
     ),
     re_path(
-        r"^(?P<interface_name>\w+)/report_settings/$", views_report.report_settings
+        r"^(?P<interface_name>\w+)/report_settings/$", views_report.report_settings, name='report_settings'
     ),
     re_path(
-        r"^(?P<interface_name>\w+)/report_settings/advanced_report_setiings/(?P<_id>\w+)/$", views_report.advanced_report_settings
+        r"^(?P<interface_name>\w+)/report_data/advanced_report_settings/(?P<_id>\w+)/$", views_report.advanced_report_settings
+    ),
+    re_path(
+        r"^(?P<interface_name>\w+)/report_data/create_report/$", views_report.create_report
     )
 ]
