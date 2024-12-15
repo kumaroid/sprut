@@ -111,19 +111,19 @@
         background-color: #f0f8ff;
     }
     .project-name-button {
-      font-size: 24px;
-      font-weight: bold;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      padding: 0;
-      transition: opacity 0.3s;
-  }
-
-  .project-name-button:hover {
-      opacity: 0.8;
-  }
+        font-size: 24px;
+        font-weight: bold;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 0;
+        transition: opacity 0.3s;
+    }
+  
+    .project-name-button:hover {
+        opacity: 0.8;
+    }
     </style>
     
     <body>
@@ -144,29 +144,24 @@
           <th>Алиас</th>
           <th>Статус</th>
           <th>Дата изменения</th>
-          {% if request.user.is_superuser %}
           <th>Действия</th>
-          {% endif %}
         </tr>
       </thead>
       <tbody>
         <form method="POST">
-        {% for req in reports %}
+        {% for req in archive_reports %}
         {%csrf_token%}
-        <input type="hidden" id="alias" name="alias" value="{{req.2}}">
+        <input type="hidden" id="report_id" name="report_id" value="{{req.0}}">
         <tr>
           <td>{{ req.0 }}</td>
           <td>{{ req.1 }}</td>
           <td>{{ req.2 }}</td>
           <td>{{ req.3 }}</td>
           <td>{{ req.4 }}</td>
-          {% if  request.user.is_superuser %}
-          <td><a class="settings-btn" href="/{{ interface_name }}/report_data/advanced_report_settings/{{ req.0 }}/">Настроить</a></td>
-          <td><input type="submit" class="settings-btn" id="archive_report" name="archive_report" value="Архивировать" href="/{{ interface_name }}/report_data/archive_reports/"></td>
-          {% endif %}
+          <td><input type="submit" value="Восстановить" id="recovery_report" name="recovery_report" class="settings-btn" href="/{{ interface_name }}/report_settings/"></td>
         </tr>
         {% endfor %}
-      </form>
+    </form>
       </tbody>
     </table>
     

@@ -25,20 +25,24 @@ from sprut.views import (
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    re_path(r"^(?P<interface_name>\w+)/login/$", use_cases.login_required),
+    re_path(r"^(?P<interface_name>\w+)/workpage/$", views_dashboard.workpage),
     re_path(
-        r"^(?P<interface_name>\w+)/login/$", use_cases.login_required
+        r"^(?P<interface_name>\w+)/report_settings/$",
+        views_report.report_settings,
+        name="report_settings",
     ),
     re_path(
-        r"^(?P<interface_name>\w+)/workpage/$", views_dashboard.workpage
+        r"^(?P<interface_name>\w+)/report_data/advanced_report_settings/(?P<_id>\w+)/$",
+        views_report.advanced_report_settings,
     ),
     re_path(
-        r"^(?P<interface_name>\w+)/report_settings/$", views_report.report_settings, name='report_settings'
+        r"^(?P<interface_name>\w+)/report_data/create_report/$",
+        views_report.create_report,
     ),
     re_path(
-        r"^(?P<interface_name>\w+)/report_data/advanced_report_settings/(?P<_id>\w+)/$", views_report.advanced_report_settings
+        r"^(?P<interface_name>\w+)/report_data/archive_reports/$",
+        views_report.archive_reports,
     ),
-    re_path(
-        r"^(?P<interface_name>\w+)/report_data/create_report/$", views_report.create_report
-    )
 ]
