@@ -24,6 +24,12 @@ def timeit(func):
         end_time = time.perf_counter()
         total_time = end_time - start_time
         logger.info(f"Function {func.__name__}. Took {total_time:.4f} seconds")
+        # connect = get_connector_database()
+        # execute_sql(
+        #     connect.commit,
+        #     f"""insert into sprut_prom.logs(function_name, time) values({func.__name__}, {total_time:.4f})"""
+        # )
+        # connect.commit()
         return res
 
     return wrapper
